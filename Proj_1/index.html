@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Janken - Rock, Paper, Scissors</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <header>
+        <div>
+            <!-- <img src="https://iili.io/2YbkBJ1.md.png" alt="Janken Logo" / id="gayab"> -->
+            <h1>Rock.......Paper....Scissors</h1>
+        </div>
+        <hr />
+    </header>
+    <div id="gayabv1">
+        <h2>How to play</h2>
+        <p>1.Choose Your desired Move</p>
+        <p>2.The Bot will Choose it's move.</p>
+        <p>3.The result will be displayed On the Battleground</p>
+        <hr>
+    </div>
+    <main class="game">
+        <div class="moves">
+            <h2 id="gayab">🫵🏼 Your Move</h2>
+            <figure>
+                <img src="https://iili.io/2Ybvw4p.md.png" alt="Rock" id="rock" />
+                <figcaption>Rock</figcaption>
+            </figure>
+            <figure>
+                <img src="https://iili.io/2YbvxY7.md.png" alt="Paper" id="paper" />
+                <figcaption>Paper</figcaption>
+            </figure>
+            <figure>
+                <img src="https://iili.io/2YbSce1.md.png" alt="Scissors" id="scissors" />
+                <figcaption>Scissors</figcaption>
+            </figure>
+        </div>
+        <div class="bot">
+            <h2>🤖 Computer's Move</h2>
+            <div class="slot-machine">
+                <div class="slot-column">
+                    <div class="slot" id="slot">🤖</div>
+                </div>
+            </div>
+        </div>
+        <div class="rules" id="gayab">
+            <h2>How to play</h2>
+            <p>1.Choose Your desired Move</p>
+            <p>2.The Bot will Choose it's move.</p>
+            <p>3.The result will be displayed On the Battleground</p>
+        </div>
+
+        <div class="result">
+            <h2>⚔️ Battleground 🛡️</h2>
+            <div class="choices">
+                <h3>Your Choice: <span id="playerChoice">-</span></h3>
+                <h3>Bot's Choice: <span id="botChoice">-</span></h3>
+                <h3>Result: &nbsp;&nbsp;<span id="res">-</span></h3>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const playerChoiceDisplay = document.getElementById("playerChoice");
+        const botChoiceDisplay = document.getElementById("botChoice");
+        const resultDisplay = document.getElementById("res");
+        const slotElement = document.getElementById("slot");
+
+        const images = ["🪨", "📃", "✂️"];
+
+        function spinSlot(selectedImage) {
+            playerChoiceDisplay.textContent = selectedImage;
+            botChoiceDisplay.textContent = "-";
+            resultDisplay.textContent = "-";
+            slotElement.textContent = "";
+
+            const spinInterval = setInterval(() => {
+                const randomIndex = Math.floor(Math.random() * images.length);
+                slotElement.textContent = images[randomIndex];
+            }, 100);
+
+            setTimeout(() => {
+                clearInterval(spinInterval);
+                const finalIndex = Math.floor(Math.random() * images.length);
+                const botChoice = images[finalIndex];
+                slotElement.textContent = botChoice;
+                botChoiceDisplay.textContent = botChoice;
+
+                const result = determineWinner(selectedImage, botChoice);
+                resultDisplay.textContent = result;
+            }, 2000);
+        }
+
+        function determineWinner(player, bot) {
+            if (player === bot) return "It's a Draw! 🤝";
+            if (
+                (player === "🪨" && bot === "✂️") ||
+                (player === "📃" && bot === "🪨") ||
+                (player === "✂️" && bot === "📃")
+            ) {
+                return "You Win! 🎉";
+            } else {
+                return "🤖Bot Wins! 🤦‍♂️";
+            }
+        }
+
+        document
+            .getElementById("rock")
+            .addEventListener("click", () => spinSlot("🪨"));
+        document
+            .getElementById("paper")
+            .addEventListener("click", () => spinSlot("📃"));
+        document
+            .getElementById("scissors")
+            .addEventListener("click", () => spinSlot("✂️"));
+    </script>
+</body>
+
+</html>
